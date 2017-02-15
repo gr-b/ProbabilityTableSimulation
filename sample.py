@@ -1,5 +1,5 @@
 #File: sample.py
-#Authors: Griffin Bishop, David Deisde, Gianluca Tarquinio, Godot
+#Authors: Griffin Bishop, David Deisadze, Gianluca Tarquinio, Godot
 
 class Node(object):
     """
@@ -7,3 +7,4 @@ class Node(object):
     """
     def __init__(self, parent=None):
         self.parent = parent
+
