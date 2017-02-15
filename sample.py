@@ -16,7 +16,7 @@ icy = {'dependent_on': ['humidity','temperature'],
        'low':
            {'warm': 0.001, 'mild': 0.01, 'cold': 0.05},
        'medium':
-           {'warm': 0.001, 'mild': 0.03, 'cold': 0.02}
+           {'warm': 0.001, 'mild': 0.03, 'cold': 0.02},
        'high':
            {'warm': 0.005, 'mild': 0.01, 'cold': 0.35}}
 
@@ -24,7 +24,7 @@ snow = {'dependent_on': ['humidity','temperature'],
         'low':
            {'warm': 0.0001, 'mild': 0.001, 'cold': 0.1},
        'medium':
-           {'warm': 0.0001, 'mild': 0.0001, 'cold': 0.25}
+           {'warm': 0.0001, 'mild': 0.0001, 'cold': 0.25},
        'high':
            {'warm': 0.0001, 'mild': 0.001, 'cold': 0.4}}
 
