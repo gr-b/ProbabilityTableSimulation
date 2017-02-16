@@ -106,6 +106,34 @@ def assign_values():
             
     return new_graph
 
+def perform_iteration(test_node, given_list):
+    world = assign_values()
+    for key, value in given_list:
+        if not world[key] == value:
+            #print('world not work, moving on')
+            return perform_iteration(test_node, given_list)
+    return world[test_node[0]]
+
+# test_node: of the form (stringA, stringB) where stringA is the
+# name of the node we are concerned with, and stringB is the value
+# num_iterations: how many successful trials do we want
+# given_list: a list of tuples of the form above, where each tuple is a
+# condition on the world for it to be counted as a successfull trial.
+# Returns the number of trials in which the test_node condition was true
+def perform_iterations(test_node, num_iterations, given_list):
+    event_occurred = 0
+    for i in range(num_iterations):
+        if test_node[1] == perform_iteration(test_node, given_list):
+            event_occurred += 1
+    #while successful_iterations < num_iterations:
+    #    result = perform_iteration(test_node, given_list)
+    #    if result != None:
+    #        successful_iterations += 1
+    #        if result == test_node[1]:
+    #            test_event_occured += 1
+    return event_occurred / num_iterations
+                
+
 
 
 
