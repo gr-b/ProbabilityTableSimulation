@@ -29,7 +29,7 @@ snow = {'dependent_on': ['humidity','temperature'],
            {'warm': 0.0001, 'mild': 0.001, 'cold': 0.4}}
 
 #cumulative
-day = {'weekend':0.2,'weekday':1}
+day = {'dependent_on': [], 'weekend':0.2,'weekday':1}
 
 #not cumulative:
 cloudy = {'dependent_on': ['snow'],
@@ -47,6 +47,73 @@ stress = {'dependent_on': ['snow','exams'],
           'true':
               {'false': 0.1, 'true': 0.5}}
 
+
+graph = {'humidity': humidity, 'temperature': temperature, 'day': day,
+         'snow': snow, 'icy': icy, 'cloudy': cloudy, 'exams': exams,
+         'stress': stress}
+
+# dictionary dictionary -> string
+# node: the node we are assigning
+# new_graph: the already assigned values for nodes we are depending on
+# Look up the values that the node depends on in the given graph
+new_graph = {'humidity': 'low', 'temperature': 'cold', 'day': 'weekend', 'snow': 'true', 'exams': 'true'}
+def assign_depending(node, new_graph, node_name):
+    depending_on = node['dependent_on']
+    # Accessors must be in the correct order in the depending on list
+    accessors = [new_graph[key] for key in depending_on]
+
+    probability = node
+    prevProb = None
+    for accessor in accessors:
+        prevProb = probability
+        
+        probability = probability[accessor]
+
+    # Now we should have a number in probability
+    dice = random.random()
+    if dice < probability:
+        if node_name == 'stress':
+            return 'high'
+        return 'true' # this won't work for stress, add an if statement
+    else:
+        if node_name == 'stress':
+            return 'low'
+        return 'false'
+
+# dictionary -> string
+# Given a cumulative probability node, return
+# an assignment.
+def assign_nondependent(node):
+    node = {k:v for k,v in node.items() if not k == 'dependent_on'}
+    dice = random.random()
+    for key in node.keys():
+        probability = node[key]
+        #print(dice, probability, key)
+        if dice < probability:
+            return key
+    
+# global dictionary -> dictionary of assigned values
+# Requires that all nondependent values be placed at the front
+# of the dictionary.
+def assign_values():
+    new_graph = {}
+    for key in graph.keys():
+        item = graph[key]
+        if len(item['dependent_on']) == 0:
+            new_graph[key] = assign_nondependent(item)
+        else:
+            new_graph[key] = assign_depending(item, new_graph, key)
+            
+    return new_graph
+
+
+
+
+
+
+
+
+
 class Node(object):
     """
     Node object, has reference to its parent
@@ -63,7 +130,7 @@ def rollDice():
 # returns tuple (key, val)
 def baseNodeGetProbability(base_node):
     die_rolled = rollDice()
-    print die_rolled
+    print(die_rolled)
 
     # get all indices after the first
     for key in sorted(base_node, key=base_node.get):
@@ -76,8 +143,8 @@ def baseNodeGetProbability(base_node):
 
 def main():
     arguments = sys.argv
-    print baseNodeGetProbability(humidity)
-    print baseNodeGetProbability(temperature)
+    #print baseNodeGetProbability(humidity)
+    #print baseNodeGetProbability(temperature)
 
 
 if __name__ == '__main__':
