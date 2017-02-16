@@ -174,6 +174,22 @@ def main():
     #print baseNodeGetProbability(humidity)
     #print baseNodeGetProbability(temperature)
 
+    if len(arguments) < 3:
+        print("Too few arguments. Try: ./sample.py [nodename]=[value] [numIterations] ...")
+        
+    test_node = arguments[1].split('=')
+    numIterations = int(arguments[2])
+    #condition_list = [(k, v) for k, v in argument.split('=') for argument in arguments[2:]]
+    #print(test_node, numIterations)
+    condition_list = []
+    for argument in arguments[3:]:
+        k, v = argument.split('=')
+        condition_list += [(k,v)]
+    #print(condition_list)
+
+    print(perform_iterations(test_node, numIterations, condition_list))
+
+    
 
 if __name__ == '__main__':
     main()
