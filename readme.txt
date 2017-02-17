@@ -47,4 +47,5 @@ Test Cases:
 2: humidity=low GIVEN humidity=high
 3: snow=true GIVEN cloudy=true temperature=cold exams=false
 4: stress=low GIVEN day=weekend humidity=high temperature=warm 
-5: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
+5: day=weekday GIVEN stress=high exams=false temperature=mild
+6: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
