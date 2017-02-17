@@ -242,9 +242,10 @@ def main():
     numIterations = result[2]
     sd = (p * (1-p))**(1/2) # Using formula given on canvas
     error = 2*sd/(total_samples**(1/2))
-    print("Prob: " + str(p) + " | Samples: " + str(total_samples) + " | Non-rejected: " + str(numIterations))
-    print("SD: " + str(sd) + " | Error: +/-" + str(2*error))
-    print("({0},{1})".format(p-error,p+error))
+    print("Prob: {0:.05f}".format(p) + " | Samples: {}".format(total_samples) +
+          " | Non-rejected: {}".format(numIterations))
+    print("SD: {0:.05f}".format(sd)  #+ " | Error: +/-{0:.05f}".format(2*error))
+    + " | 95% interval: ({0:.05f},{1:.05f})".format(p-error,p+error))
 
     
 
