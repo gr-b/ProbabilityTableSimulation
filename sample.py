@@ -153,7 +153,7 @@ def perform_iterations2(test_node, num_iterations, given_list):
     if non_rejected > 0:
         return (event_occurred / non_rejected, total_samples, non_rejected)
     else:
-        return 0
+        return (0, total_samples, 0)
                 
                 
 
