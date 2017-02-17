@@ -43,9 +43,8 @@ SD: 0.00000 | 95% interval: (0.00000,0.00000)
 We already know that this probably would be 0. CORRECT
 
 Test Cases:
-1: cloudy=false
-2: humidity=low GIVEN humidity=high
-3: snow=true GIVEN cloudy=true temperature=cold exams=false
-4: stress=low GIVEN icy=true snow=true 
-5: day=weekday GIVEN stress=high exams=false temperature=mild
-6: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
+1: humidity=low GIVEN humidity=high
+2: snow=true GIVEN cloudy=true temperature=cold exams=false
+3: stress=low GIVEN icy=true snow=true 
+4: day=weekday GIVEN stress=high exams=false temperature=mild
+5: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
