@@ -3,6 +3,9 @@
 
 import sys, random, math
 
+total_samples = 0
+numIterations = 0
+
 # CPTs -- For nodes which don't depend on others,
 # the values have been shifted(made cumulative) so we can just check if
 # the generated random is lower than the value in the table.
@@ -56,7 +59,7 @@ graph = {'humidity': humidity, 'temperature': temperature, 'day': day,
 # node: the node we are assigning
 # new_graph: the already assigned values for nodes we are depending on
 # Look up the values that the node depends on in the given graph
-new_graph = {'humidity': 'low', 'temperature': 'cold', 'day': 'weekend', 'snow': 'true', 'exams': 'true'}
+#new_graph = {'humidity': 'low', 'temperature': 'cold', 'day': 'weekend', 'snow': 'true', 'exams': 'true'}
 def assign_depending(node, new_graph, node_name):
     depending_on = node['dependent_on']
     # Accessors must be in the correct order in the depending on list
@@ -107,12 +110,49 @@ def assign_values():
     return new_graph
 
 def perform_iteration(test_node, given_list):
+    global total_samples, numIterations
+    total_samples += 1
     world = assign_values()
     for key, value in given_list:
         if not world[key] == value:
             #print('world not work, moving on')
+            
+            #print(total_samples, numIterations)
+            if total_samples >= numIterations:
+                return -1 # failure
             return perform_iteration(test_node, given_list)
     return world[test_node[0]]
+
+def perform_iteration2(test_node, given_list):
+    world = assign_values()
+    valid_sample = True
+    for key, value in given_list:
+        if not world[key] == value:
+            valid_sample = False
+    if valid_sample:
+        return world[test_node[0]]
+    else:
+        return -1
+                
+
+def perform_iterations2(test_node, num_iterations, given_list):
+    global total_samples
+    total_samples = 0
+    event_occurred = 0
+    non_rejected = 0
+    while total_samples < num_iterations:
+        result = perform_iteration2(test_node, given_list)
+        total_samples += 1
+        if result == test_node[1]:
+            event_occurred += 1
+            non_rejected += 1
+        elif result == -1:
+            pass
+        else:
+            non_rejected += 1
+    return (event_occurred / non_rejected, total_samples, non_rejected)
+                
+                
 
 # test_node: of the form (stringA, stringB) where stringA is the
 # name of the node we are concerned with, and stringB is the value
@@ -121,10 +161,18 @@ def perform_iteration(test_node, given_list):
 # condition on the world for it to be counted as a successfull trial.
 # Returns the number of trials in which the test_node condition was true
 def perform_iterations(test_node, num_iterations, given_list):
+    global total_samples
+    total_samples = 0
     event_occurred = 0
-    for i in range(num_iterations):
-        if test_node[1] == perform_iteration(test_node, given_list):
+    i = 0
+    while i < num_iterations and total_samples < num_iterations:
+    #for i in range(num_iterations):
+        i += 1
+        result = perform_iteration(test_node, given_list)
+        if test_node[1] == result:
             event_occurred += 1
+        elif result == -1:
+            i += -1
     #while successful_iterations < num_iterations:
     #    result = perform_iteration(test_node, given_list)
     #    if result != None:
@@ -170,6 +218,7 @@ def baseNodeGetProbability(base_node):
 
 
 def main():
+    global total_samples, numIterations
     arguments = sys.argv
     #print baseNodeGetProbability(humidity)
     #print baseNodeGetProbability(temperature)
@@ -187,7 +236,15 @@ def main():
         condition_list += [(k,v)]
     #print(condition_list)
 
-    print(perform_iterations(test_node, numIterations, condition_list))
+    result = perform_iterations2(test_node, numIterations, condition_list)
+    p = result[0]
+    total_samples = result[1]
+    numIterations = result[2]
+    sd = (p * (1-p))**(1/2) # Using formula given on canvas
+    error = 2*sd/(total_samples**(1/2))
+    print("Prob: " + str(p) + " | Samples: " + str(total_samples) + " | Non-rejected: " + str(numIterations))
+    print("SD: " + str(sd) + " | Error: +/-" + str(2*error))
+    print("({0},{1})".format(p-error,p+error))
 
     
 
