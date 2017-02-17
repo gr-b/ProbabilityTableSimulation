@@ -150,7 +150,10 @@ def perform_iterations2(test_node, num_iterations, given_list):
             pass
         else:
             non_rejected += 1
-    return (event_occurred / non_rejected, total_samples, non_rejected)
+    if non_rejected > 0:
+        return (event_occurred / non_rejected, total_samples, non_rejected)
+    else:
+        return 0
                 
                 
 
@@ -244,7 +247,7 @@ def main():
     error = 2*sd/(total_samples**(1/2))
     print("Prob: {0:.05f}".format(p) + " | Samples: {}".format(total_samples) +
           " | Non-rejected: {}".format(numIterations))
-    print("SD: {0:.05f}".format(sd)  #+ " | Error: +/-{0:.05f}".format(2*error))
+    print("SD: {0:.05f}".format(sd)  + " | Range: {0:.05f}".format(2*error)
     + " | 95% interval: ({0:.05f},{1:.05f})".format(p-error,p+error))
 
     
