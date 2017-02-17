@@ -42,7 +42,9 @@ SD: 0.00000 | 95% interval: (0.00000,0.00000)
 
 We already know that this probably would be 0. CORRECT
 
-## All of the other nodes observed test case
->> python3.6 sample.py stress=high 100 humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
-Prob: 0.87500 | Samples: 10000 | Non-rejected: 8
-SD: 0.33072 | 95% interval: (0.86839,0.88161)
+Test Cases:
+1: cloudy=false
+2: humidity=low GIVEN humidity=high
+3: snow=true GIVEN cloudy=true temperature=cold exams=false
+4: stress=low GIVEN day=weekend humidity=high temperature=warm 
+5: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
