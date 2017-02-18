@@ -1,5 +1,5 @@
 #File: sample.py
-#Authors: Griffin Bishop, David Deisadze, Gianluca Tarquinio, Godot
+#Authors: Griffin Bishop, David Deisadze, Gianluca Tarquinio, Ian Vossoughi
 
 import sys, random, math
 
