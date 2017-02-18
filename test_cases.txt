@@ -1,0 +1,11 @@
+Test Cases:
+
+1: humidity=low GIVEN humidity=high
+
+2: snow=true GIVEN cloudy=true temperature=cold exams=false
+
+3: stress=low GIVEN icy=true snow=true 
+
+4: day=weekday GIVEN stress=high exams=false temperature=mild
+
+5: stress=high GIVEN humidity=low temperature=cold icy=false snow=false day=weekday cloudy=true exams=true
