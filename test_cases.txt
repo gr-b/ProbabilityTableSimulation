@@ -1,6 +1,6 @@
 Test Cases:
 
-1: humidity=low GIVEN humidity=high
+1: cloudy=talse
 
 2: snow=true GIVEN cloudy=true temperature=cold exams=false
 
