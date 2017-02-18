@@ -1,6 +1,6 @@
 Test Cases:
 
-1: cloudy=talse
+1: cloudy=false
 
 2: snow=true GIVEN cloudy=true temperature=cold exams=false
 
