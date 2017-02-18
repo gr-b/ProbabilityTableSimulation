@@ -236,7 +236,6 @@ def main():
     condition_list = []
     for argument in arguments[3:]:
         argLower = str(argument.lower())
-        print(argLower)
         k, v = argLower.split('=')
         condition_list += [(k,v)]
     #print(condition_list)
